@@ -1,8 +1,8 @@
 # src/cli/main.py
 
-from services.user_service import UserService
-from services.subscription_service import SubscriptionService
-from services.payment_service import PaymentService
+from src.services.user_service import UserService
+from src.services.subscription_service import SubscriptionService
+from src.services.payment_service import PaymentService
 
 class SubscriptionTrackerCLI:
     def __init__(self):
