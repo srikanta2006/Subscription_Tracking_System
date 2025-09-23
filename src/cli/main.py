@@ -16,7 +16,7 @@ class SubscriptionTrackerCLI:
             "4": self.subscription_service.view_subscriptions_for_user,
             "5": self.payment_service.add_payment_for_subscription,
             "6": self.payment_service.view_payments_for_subscription,
-            "7": self.user_service.delete_user_if_no_subscriptions,
+            "7": self.user_service.delete_user,
             "8": self.subscription_service.calculate_total_spend,
             "9": self.exit_program
         }
@@ -29,7 +29,7 @@ class SubscriptionTrackerCLI:
         print("4. View Subscriptions for a User")
         print("5. Add Payment for a Subscription")
         print("6. View Payments for a Subscription")
-        print("7. Delete User (only if no subscriptions)")
+        print("7. Delete User")
         print("8. Total Spend of the User")
         print("9. Exit")
 
