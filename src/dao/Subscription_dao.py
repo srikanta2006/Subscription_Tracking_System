@@ -26,3 +26,7 @@ class SubscriptionDAO:
     def get_subscription_by_id(self, subscription_id: int):
         resp = self._sb.table("subscriptions").select("*").eq("id", subscription_id).single().execute()
         return resp.data if resp.data else None
+    
+    def get_all_subscriptions(self):
+        resp = self._sb.table("subscriptions").select("*").execute()
+        return resp.data if resp.data else []

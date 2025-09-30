@@ -37,3 +37,8 @@ class PaymentsDAO:
 
 
         return sum(float(row["amount"]) for row in resp.data)
+
+
+    def get_all_payments(self):
+        resp = self._sb.table("payments").select("*").execute()
+        return resp.data if resp.data else []

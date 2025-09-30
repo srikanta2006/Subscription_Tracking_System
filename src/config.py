@@ -1,5 +1,5 @@
 import os
-
+from dotenv import load_dotenv # type: ignore
 from supabase import create_client, Client # type: ignore
  
 load_dotenv()  
