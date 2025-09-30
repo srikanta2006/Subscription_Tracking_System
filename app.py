@@ -218,16 +218,25 @@ elif choice == "Total Spend":
             if not subs:
                 st.info("User has no subscriptions.")
             else:
-                sub_ids = [s["id"] for s in subs]
-                total = payment_service.payment_dao.get_total_spend_for_subscriptions(sub_ids)
-                st.metric(label=f"Total Spend for {user['name']}", value=f"₹ {total:.2f}")
-
-                payments = []
+                # 1. First, get all the payment details (the part that works)
+                payments_data = []
                 for s in subs:
-                    p = payment_service.payment_dao.get_payments_by_subscription(s["id"])
-                    if p:
-                        for pay in p:
-                            payments.append({"subscription": s["name"], "amount": float(pay["amount"])})
-                if payments:
-                    df = pd.DataFrame(payments)
-                    st.bar_chart(df.set_index("subscription"))
+                    payments = payment_service.payment_dao.get_payments_by_subscription(s["id"])
+                    if payments:
+                        for pay in payments:
+                            payments_data.append({"subscription": s["name"], "amount": float(pay["amount"])})
+
+                if not payments_data:
+                    st.info("No payments found for this user.")
+                else:
+                    # 2. Create the DataFrame from the detailed data
+                    df = pd.DataFrame(payments_data)
+
+                    # 3. ✅ Calculate the total SUM from the DataFrame
+                    total_spend = df['amount'].sum()
+
+                    # 4. Display the metric using the correct total
+                    st.metric(label=f"Total Spend for {user['name']}", value=f"₹ {total_spend:.2f}")
+
+                    # 5. Display the chart using the same DataFrame, grouped by subscription
+                    st.bar_chart(df.groupby('subscription')['amount'].sum())
